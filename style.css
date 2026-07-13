@@ -20,7 +20,8 @@ h1 { margin: 0; }
 .tagline { color: var(--muted); }
 .controls { display: flex; gap: 20px; justify-content: center; margin: 24px 0; }
 .controls label { display: grid; gap: 6px; color: var(--muted); font-size: 0.9rem; }
-input {
+
+input, select {
   font: inherit;
   width: 110px;
   padding: 8px 10px;
@@ -29,6 +30,12 @@ input {
   border: 1px solid #2a3340;
   border-radius: 8px;
   text-align: center;
+}
+input {
+  cursor: text;
+}
+select {
+  cursor: pointer;
 }
 #cost {
   display: block;

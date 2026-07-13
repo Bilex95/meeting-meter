@@ -1,9 +1,9 @@
 // meeting-meter — drift-free live cost counter.
 // We never "count up"; we always derive cost from (now - startedAt),
 // so background-tab throttling can't make the number lie.
-
 const peopleEl = document.getElementById("people");
 const rateEl = document.getElementById("rate");
+const currencyEl = document.getElementById("currency");
 const costEl = document.getElementById("cost");
 const elapsedEl = document.getElementById("elapsed");
 const toggleBtn = document.getElementById("toggle");
@@ -30,13 +30,27 @@ function fmtClock(ms) {
   return `${pad(Math.floor(s / 3600))}:${pad(Math.floor((s % 3600) / 60))}:${pad(s % 60)}`;
 }
 
-function tick() {
+function updateDisplay() {
   const cost = currentCost();
-  costEl.textContent = cost.toFixed(2);
+  
+  // Format the output using Intl.NumberFormat based on the selected currency
+  const formatter = new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: currencyEl.value,
+  });
+
+  costEl.textContent = formatter.format(cost);
   costEl.classList.toggle("hot", cost >= 100); // psychology: it turns red
   elapsedEl.textContent = fmtClock(elapsedMs());
+}
+
+function tick() {
+  updateDisplay();
   rafId = requestAnimationFrame(tick);
 }
+
+// Reformat the live counter immediately when a new currency is selected
+currencyEl.addEventListener("change", updateDisplay);
 
 toggleBtn.addEventListener("click", () => {
   if (startedAt) {
@@ -44,6 +58,7 @@ toggleBtn.addEventListener("click", () => {
     startedAt = null;
     cancelAnimationFrame(rafId);
     toggleBtn.textContent = "Resume";
+    updateDisplay(); 
   } else {
     startedAt = Date.now();             // start / resume
     toggleBtn.textContent = "Pause";
@@ -56,7 +71,9 @@ resetBtn.addEventListener("click", () => {
   banked = 0;
   cancelAnimationFrame(rafId);
   toggleBtn.textContent = "Start";
-  costEl.textContent = "0.00";
   costEl.classList.remove("hot");
-  elapsedEl.textContent = "00:00:00";
+  updateDisplay(); 
 });
+
+// Initialize the display on page load to apply default formatting
+updateDisplay();

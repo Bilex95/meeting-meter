@@ -14,9 +14,17 @@
   <div class="controls">
     <label>People <input id="people" type="number" min="1" value="4" /></label>
     <label>Avg hourly rate <input id="rate" type="number" min="0" step="0.01" value="25" /></label>
+    <label>Currency 
+      <select id="currency">
+        <option value="NGN">₦ NGN</option>
+        <option value="USD" selected>$ USD</option>
+        <option value="EUR">€ EUR</option>
+        <option value="GBP">£ GBP</option>
+      </select>
+    </label>
   </div>
 
-  <output id="cost" aria-live="off">0.00</output>
+  <output id="cost" aria-live="off">$0.00</output>
   <p id="elapsed">00:00:00</p>
 
   <div class="buttons">
