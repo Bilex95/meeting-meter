@@ -44,9 +44,11 @@ toggleBtn.addEventListener("click", () => {
     startedAt = null;
     cancelAnimationFrame(rafId);
     toggleBtn.textContent = "Resume";
+    toggleBtn.setAttribute("aria-pressed", "false");
   } else {
     startedAt = Date.now();             // start / resume
     toggleBtn.textContent = "Pause";
+    toggleBtn.setAttribute("aria-pressed", "true");
     tick();
   }
 });
@@ -56,6 +58,7 @@ resetBtn.addEventListener("click", () => {
   banked = 0;
   cancelAnimationFrame(rafId);
   toggleBtn.textContent = "Start";
+  toggleBtn.setAttribute("aria-pressed", "false");
   costEl.textContent = "0.00";
   costEl.classList.remove("hot");
   elapsedEl.textContent = "00:00:00";
