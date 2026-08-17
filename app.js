@@ -58,10 +58,12 @@ toggleBtn.addEventListener("click", () => {
     startedAt = null;
     cancelAnimationFrame(rafId);
     toggleBtn.textContent = "Resume";
-    updateDisplay(); 
+    toggleBtn.setAttribute("aria-pressed", "false");
+    updateDisplay();
   } else {
     startedAt = Date.now();             // start / resume
     toggleBtn.textContent = "Pause";
+    toggleBtn.setAttribute("aria-pressed", "true");
     tick();
   }
 });
@@ -71,8 +73,9 @@ resetBtn.addEventListener("click", () => {
   banked = 0;
   cancelAnimationFrame(rafId);
   toggleBtn.textContent = "Start";
+  toggleBtn.setAttribute("aria-pressed", "false");
   costEl.classList.remove("hot");
-  updateDisplay(); 
+  updateDisplay();
 });
 
 // Initialize the display on page load to apply default formatting

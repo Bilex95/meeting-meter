@@ -58,3 +58,5 @@ button {
 }
 button.ghost { background: transparent; color: var(--muted); border: 1px solid #2a3340; }
 button:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+
+.cost-label { margin: 12px 0 0; color: var(--muted); font-size: 0.9rem; }
